@@ -1,0 +1,99 @@
+<!doctype html>
+
+<html>
+	<head>
+		<title>Page Title</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0">
+        <style>
+            body{
+                margin: 0;
+                height: :0;
+                overflow: hidden;
+            }
+            
+            #canvas{
+                width: 100vw;
+                height: 100vh;
+                background-color: black;
+            }
+        </style>
+        <script src="noisejs-master/perlin.js"></script>
+        <script>
+            window.addEventListener(`load`,init,false);
+            
+            function init(){
+                let stageW = 0;
+                let stageH = 0;
+                
+                const canvas = document.getElementById(`canvas`);
+                const context = canvas.getContext(`2d`);
+                
+                noise.seed(Math.random());
+                
+                resize();
+                tick();
+                window.addEventListener(`resize`,resize);
+                
+                function tick(){
+                    requestAnimationFrame(tick);
+                    const time = Date.now()/4000;
+                    draw(time);
+                }
+                
+                function draw(time){
+                    context.clearRect(0,0,stageW,stageH);
+                    context.lineWidth = 1;
+                    
+                    const amplitude = stageH/3;
+                    const lineNum = 80;
+                    const segmentNum = 150;
+                    
+                    context.beginPath();
+                    context.strokeStyle = `white`;
+                    
+                    [...new Array(lineNum).keys()].forEach(j => {
+                        const coefficient = 50 + j;
+                        
+                        context.beginPath();
+                        
+                        const h = Math.round(j/lineNum*300);//色相
+                        const s = 100;//彩度
+                        const l = Math.round(j/lineNum*100);//明度
+                        context.strokeStyle = `hsl(${h},${s}%,${l}%)`;
+                        
+                        [...new Array(segmentNum).keys()].forEach(i => {
+                            const x = i / (segmentNum - 1) * stageW;
+                            
+                            const px = i/coefficient;
+                            const py = (j/50 + time);
+                            const y = amplitude * noise.perlin2(px,py) + stageH/2;
+                            
+                            if(i===0){
+                                context.moveTo(x,y);
+                            }else{
+                                context.lineTo(x,y);
+                            }
+                            context.stroke();
+                        });
+                    });
+                }
+                
+                function resize(){
+                    stageW = innerWidth * devicePixelRatio;
+                    stageH = innerHeight * devicePixelRatio;
+                    
+                    canvas.width = stageW;
+                    canvas.height = stageH;
+                }
+                
+               
+            }
+        
+        </script>
+	</head>
+
+	<body>
+        <canvas id="canvas"></canvas>
+	</body>
+</html>

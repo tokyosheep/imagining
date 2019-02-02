@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+        
+
+<link  id="hostStyle" rel="stylesheet" href="css/styles.css"/>
+
+<title>Create particles</title>
+    
+    <style>
+    
+        p{
+            margin-bottom: 0px;
+        }
+        
+        h4{
+            margin: 5px 0px;
+        }
+        
+        ul{
+            list-style: none;
+            padding: 0px;
+        }
+        
+        li{
+            margin-top: 10px;
+            border: solid 1px #ffffff;
+            padding: 5px;
+        }
+        
+        input[type="button"]{
+            background-color: black;
+            color: white;
+            margin-top: 10px;
+        }
+        
+        
+        input[type="number"]{
+            width: 50px;
+            background-color: black;
+            color: white;
+            margin-left: 10px;
+        }
+        
+        #R{
+            background-color: red;
+        }
+        
+        #G{
+            background-color: green;
+        }
+        
+        #B{
+            background-color: blue;
+        }
+        
+        select{
+            background-color: black;
+            color: white;
+        }
+        
+        select:disabled{
+            color: #222222;
+        }
+        
+        .option , .doc_size{
+            display: block;
+            width: 150px;
+        }
+        
+        .option span,.doc_size span{
+            display: inline-block;
+            width: 60px;
+        }
+        
+        /*====================checkbox radio button=======================*/
+        
+        input[type="checkbox"],input[type="radio"]{
+            display: none;
+        }
+        
+        .check_button{
+            display: inline-block;
+            border: solid 1px white;
+            padding: 2px;
+            margin: 5px 0px;
+            transition: all .3s;
+            color: #888;
+            background-color: black;
+            border-radius: 2px;
+        }
+        
+        .radio_button{
+            padding: 0px 5px;
+            display: inline-block;
+            border: solid 1px white;
+            transition: all .3s;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            background-color: rgba(0,0,0,0);
+        }
+        
+        .radio_button::after{
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: -100%;
+            transition: all .3s;
+            background-color: white;
+            z-index: -1;
+        }
+        
+        input[type="checkbox"]:checked + .check_button{
+            background-color: white;
+            color:black;
+        }
+        
+        input[type="radio"]:checked + .radio_button{
+            color: black;
+        }
+        
+        input[type="radio"]:checked + .radio_button::after{
+            left: 0px;
+        }
+        
+        
+        .radio_button:hover, .check_button:hover{
+            cursor: pointer;
+        } 
+        
+        input[type="radio"]:disabled + .radio_button, input[type="checkbox"]:disabled + .check_button{
+            background-color: black;
+            color: #222222;
+        }
+        
+        input[type="radio"]:disabled + .radio_button::after{
+            background-color: black;
+        }
+        /*====================checkbox radio button=======================*/
+        
+        
+        input[type="number"]:disabled{
+            background-color: black;
+            color:#222222; 
+        }
+        
+        
+        
+        
+    </style>
+    
+</head>
+
+<body class="hostElt">
+    <h1>Create particles</h1>
+
+    <div id="content">        
+        <form name="common">
+            <ul>
+                <h3>color</h3>
+                <li>
+                    <label><input type="radio" name="color" value="RGB" checked><span class="radio_button">RGB</span></label>
+                    <label><input type="radio" name="color" value="HSB"><span class="radio_button">HSB</span></label>
+                </li>    
+                
+                <li>
+                    <label>R<input type="number" id="R" name="rgb" value="255" max = "255" min = "0" step="1"></label>
+                    <label>G<input type="number" id="G" name="rgb" value="255" max = "255" min = "0" step="1"></label>
+                    <label>B<input type="number" id="B" name="rgb" value="255" max = "255" min = "0" step="1"></label>
+                </li>
+                
+                <li>
+                    <label><input type="checkbox" name="mono_color"><span class="check_button">monocolor(RGB)</span></label>
+                </li>
+                
+                <li>
+                    <h4>mono color type</h4>
+                    <label><input type="radio" name="hue_type" value="red" disabled><span class="radio_button">red</span></label>
+                    <label><input type="radio" name="hue_type" value="green" disabled><span class="radio_button">green</span></label>
+                    <label><input type="radio" name="hue_type" value="blue" checked disabled><span class="radio_button">blue</span></label>
+                </li>    
+                
+                <h3>style</h3>
+                <li>
+                    <h4>document size</h4>
+                    <label class="doc_size"><span>document width</span><input type="number" name="doc_w" value="1000"></label>
+                    <label class="doc_size"><span>document height</span><input type="number" name="doc_h" value="1000"></label>
+                </li>
+                
+                <li>
+                    <h4>graphic type</h4>
+                    <label><input type="radio" name="type" value="line"><span class="radio_button">line</span></label>
+                    <label><input type="radio" name="type" value="particle" checked><span class="radio_button">particle</span></label>
+                    <label><input type="radio" name="type" value="square"><span class="radio_button">square</span></label>
+                    <!--<label><input type="radio" name="type" value="flare"><span class="radio_button">flare</span></label>-->
+                </li>
+
+                <h3>option</h3>
+                <li>
+                    <h4>blur effect</h4>
+                    <label><input type="checkbox" name="blur" id="blur"><span class="check_button">blur</span></label>
+                    <label class="option"><span>blur point</span><input type="number" name="blur_num" value="1" min="0" step="0.1" disabled="true"></label>
+                </li>    
+                
+                <li>
+                    <label class="option"><span>opacity</span><input type="number" name="opacity" value="100" class="graph_option"></label>
+                    <label class="option"><span>pieces</span><input type="number" name="pieces" value="40" class="graph_option"></label>
+                    <label class="option"><span>size</span><input type="number" name="size" value="100" class="graph_option"></label>
+                    <label class="option"><span>stroke line</span><input type="number" name="stroke" value="5" class="graph_option" disabled></label>
+                </li>
+            </ul>    
+        </form>
+        
+        <form name="options">
+            <ul>
+                <li>
+                    <!-- <label><input type="checkbox" name="random_color"><span class="check_button">random color</span></label> -->
+                    <label><input type="checkbox" name="blur_step" disabled="true"><span class="check_button">blur step</span></label>
+                </li>    
+            </ul>
+        </form>
+        
+        <form name="particle_option">
+            <h3>particle option</h3>
+            <select name="kind_bumb">
+                <option value="normal">normal</option>
+                <option value="create_space">create space</option>
+                <option value="ripples">ripples</option>
+                <option value="ellipse">ellipse</option>
+                <option value="flare">flare</option>
+            </select>
+            
+            <h3>particle position</h3>
+            <ul>
+                <li>
+                    <label><input type="radio" name="position" value="dispersion" checked><span class="radio_button" >dispersion</span></label>
+                    <label><input type="radio" name="position" value="holisontal"><span class="radio_button">horizont</span></label>
+                    <label><input type="radio" name="position" value="center"><span class="radio_button">center</span></label>
+                    <label><input type="radio" name="position" value="more_cneter"><span class="radio_button">more_center</span></label>
+                    <label><input type="radio" name="position" value="explotion"><span class="radio_button">explotion</span></label>
+                </li>
+            </ul>
+        </form>
+        
+       
+        <div>                
+            
+            <input type="button" id="rendaling" value="rendaling">
+            
+        </div>   
+        
+    </div>
+    
+    <!-- These are debugging shortcuts.  Class debuglink items only appear in debug mode  -->
+    <span class="debuglink" id="reload">Reload</span>
+    <span class="debuglink" id="debug">Debug</span>
+    <span class="debuglink" id="sources">Sources</span>
+    
+    <script src="js/libs/CSInterface.js"></script>
+    <script src="js/libs/jquery-2.0.2.min.js"></script>
+    <script src="js/parlinnoise/noisejs-master/perlin.js"></script>
+
+    <script src="js/themeManager.js"></script>
+    <script src="js/prevent_draganddrop.js"></script>
+    <script src="js/main.js"></script>
+
+        
+</body>
+</html>
